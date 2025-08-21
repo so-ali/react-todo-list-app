@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { ITodoItem, ITodoSliceState } from '../../types/TodoSlice';
+import type { ITodoItem, ITodoSliceState } from '../../types/TodoSlice';
 
 const initialState = {
   status: 'idle',
@@ -10,7 +10,7 @@ export const todosSlice = createSlice({
   name: 'todos',
   initialState,
   reducers: {
-    initializeData: (_, { payload }: { payload: ITodoSliceState }) => payload,
+    setState: (_, { payload }: { payload: ITodoSliceState }) => payload,
     addTodo: (state, { payload }: { payload: ITodoItem }) => ({
       ...state,
       todos: state.todos.concat([payload]),
@@ -33,7 +33,6 @@ export const todosSlice = createSlice({
   },
 });
 
-export const { initializeData, addTodo, removeTodo, updateTodo } =
-  todosSlice.actions;
+export const { setState, addTodo, removeTodo, updateTodo } = todosSlice.actions;
 
 export default todosSlice.reducer;
