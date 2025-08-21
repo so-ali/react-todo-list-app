@@ -1,4 +1,4 @@
-import type { ITodoItem } from '../types/TodoSlice';
+import type { ITodoItem } from '../types/logic/TodoSlice';
 
 export const getTodos = async (
   limit: number,

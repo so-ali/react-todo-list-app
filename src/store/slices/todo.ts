@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import type { ITodoItem, ITodoSliceState } from '../../types/TodoSlice';
+import type { ITodoItem, ITodoSliceState } from '../../types/logic/TodoSlice';
 
 const initialState = {
   status: 'idle',
