@@ -1,11 +1,14 @@
 import type { ButtonHTMLAttributes } from 'react';
 import type { IButtonProps } from '../../types/ui/Button';
 import { cx } from '../../utils/helpers';
+import Loading from '../molecules/Loading';
 
 export default function Button({
   children,
   style,
   size,
+  loading,
+  error,
   ...props
 }: ButtonHTMLAttributes<HTMLButtonElement> & IButtonProps) {
   let className =
@@ -26,9 +29,15 @@ export default function Button({
     className += ' text-xs py-1 px-3';
   }
 
+  if (error) {
+    className +=
+      ' bg-red-600 text-white hover:bg-red-700 animate__animated animate__shakeX';
+  }
+
   return (
     <button {...props} className={cx(className, props.className)}>
-      {children}
+      {loading && <Loading size={14} />}
+      {!loading && <span>{children}</span>}
     </button>
   );
 }

@@ -10,17 +10,17 @@ export const todosSlice = createSlice({
   name: 'todos',
   initialState,
   reducers: {
-    setState: (_, { payload }: { payload: ITodoSliceState }) => payload,
+    setState: (state, { payload }: { payload: ITodoSliceState }) => ({
+      ...state,
+      ...payload,
+    }),
     addTodo: (state, { payload }: { payload: ITodoItem }) => ({
       ...state,
-      todos: state.todos.concat([payload]),
+      todos: [payload].concat(state.todos),
     }),
-    removeTodo: (
-      state,
-      { payload }: { payload: ITodoItem | { id: number } }
-    ) => ({
+    removeTodo: (state, { payload }: { payload: number }) => ({
       ...state,
-      todos: state.todos.filter((item) => item.id !== payload.id),
+      todos: state.todos.filter((item) => item.id !== payload),
     }),
     updateTodo: (state, { payload }: { payload: ITodoItem }) => {
       return {

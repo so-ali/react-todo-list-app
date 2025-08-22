@@ -18,7 +18,7 @@ export const getTodos = async (
       response &&
       Array.isArray(response?.todos)
     ) {
-      return response?.todos.map((item: ITodoItem | {}) => item as ITodoItem);
+      return response?.todos.map((item: ITodoItem) => item as ITodoItem);
     }
   } catch (e) {
     console.error(e);

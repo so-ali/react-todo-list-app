@@ -11,28 +11,48 @@ export const useTodoQuery = ({
 }) => {
   const queryClient = useQueryClient();
   const getList = useQuery({
-    queryKey: ['todos-list', limit, offset],
+    queryKey: ['todos', limit, offset],
     queryFn: () => getTodos(limit, offset),
   });
 
   const addItem = useMutation({
     mutationFn: (todo: string) => addTodo(todo),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['todos-list'] });
+    onMutate: async (newTodo) => {
+      await queryClient.cancelQueries({ queryKey: ['todos'] });
+      const previousTodos = queryClient.getQueryData(['todos']);
+      queryClient.setQueryData(['todos'], (oldTodos: ITodoItem[]) => [
+        {
+          id: oldTodos.length + 1,
+          todo: newTodo,
+          completed: false,
+          userId: 0,
+        },
+        ...oldTodos,
+      ]);
+
+      return { previousTodos };
+    },
+    onError: (_er, _n, context) => {
+      if (context) {
+        queryClient.setQueryData(['todos'], context.previousTodos);
+      }
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ['todos'] });
     },
   });
 
   const removeItem = useMutation({
     mutationFn: (id: number) => deleteTodo(id),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['todos-list'] });
+      queryClient.invalidateQueries({ queryKey: ['todos'] });
     },
   });
 
   const updateItem = useMutation({
     mutationFn: (updatedTodo: ITodoItem) => updateTodo(updatedTodo),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['todos-list'] });
+      queryClient.invalidateQueries({ queryKey: ['todos'] });
     },
   });
 

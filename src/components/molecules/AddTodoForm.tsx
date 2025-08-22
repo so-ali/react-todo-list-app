@@ -1,12 +1,45 @@
 import { Plus } from 'lucide-react';
 import Button from '../atoms/Button';
 import Input from '../atoms/Input';
+import type { IAddTodoFormProps } from '../../types/ui/AddTodoForm';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { SchemaAddForm } from '../../schemas/addTodoForm';
+import type z from 'zod';
+import { toast } from 'react-toastify';
 
-export default function AddTodoForm() {
+export default function AddTodoForm({ onAdd }: IAddTodoFormProps) {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    setValue,
+  } = useForm({
+    resolver: zodResolver(SchemaAddForm),
+  });
+
+  const onSubmit = async (data: z.infer<typeof SchemaAddForm>) => {
+    if (isSubmitting) return;
+    await onAdd(data.todo);
+    setValue('todo', '');
+    toast.dismiss();
+    toast.success('Added successfully!');
+  };
+
   return (
-    <form onSubmit={(e) => e.preventDefault()} className='flex gap-3'>
-      <Input className='flex-1' placeholder='Memorize a poem...' />
-      <Button style='primary'>
+    <form
+      onSubmit={handleSubmit(onSubmit, (e) => toast.error(e.todo?.message))}
+      className='flex gap-3 w-full'
+    >
+      <Input
+        className='flex-1 w-[inherit]'
+        placeholder='Memorize a poem...'
+        {...register('todo')}
+        error={errors.todo?.message}
+        autoFocus
+        autoComplete='off'
+      />
+      <Button style='primary' error={!!errors.todo} loading={isSubmitting}>
         <Plus />
       </Button>
     </form>
