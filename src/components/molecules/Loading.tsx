@@ -1,5 +1,5 @@
 import { Loader2 } from 'lucide-react';
-import type { ILoadingProps } from '../../types/ui/Loading';
+import type { ILoadingProps } from '@type/ui/Loading';
 
 export default function Loading({ placeholder, size }: ILoadingProps) {
   return (

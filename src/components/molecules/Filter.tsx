@@ -1,5 +1,5 @@
 import Button from '../atoms/Button';
-import { type IFilterProps, FilterEnum } from '../../types/ui/Filter';
+import { type IFilterProps, FilterEnum } from '@type/ui/Filter';
 import { capitalize } from '../../utils/helpers';
 
 export default function Filter({ value, onChange, disabled }: IFilterProps) {

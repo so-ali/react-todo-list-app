@@ -1,7 +1,7 @@
 import { createContext, useContext, useState } from 'react';
 import { useTodoController } from '../hooks/todoController';
 import React from 'react';
-import type { ITodosContextType } from '../types/logic/TodosContext';
+import type { ITodosContextType } from '@type/logic/TodosContext';
 
 const TodosContext = createContext<ITodosContextType | null>(null);
 

@@ -1,9 +1,9 @@
-import ContainerTemplate from './components/templates/ContainerTemplate';
-import TodosList from './components/organisms/TodosList';
-import AddTodoForm from './components/molecules/AddTodoForm';
-import Loading from './components/molecules/Loading';
-import ErrorMessage from './components/molecules/ErrorMessage';
-import TodosHeader from './components/organisms/TodosHeader';
+import { ContainerTemplate } from '@components/templates';
+import { TodosList } from '@components/organisms';
+import { AddTodoForm } from '@components/molecules';
+import { Loading } from '@components/molecules';
+import { ErrorMessage } from '@components/molecules';
+import { TodosHeader } from '@components/organisms';
 import { useTodosContext } from './context/TodosContext';
 
 function AppContainer() {

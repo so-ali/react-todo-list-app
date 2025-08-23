@@ -1,7 +1,7 @@
 import SearchForm from '../molecules/SearchForm';
 import Filter from '../molecules/Filter';
 import { useEffect, useState } from 'react';
-import type { IFilterValues } from '../../types/ui/Filter';
+import type { IFilterValues } from '@type/ui/Filter';
 import { useTodosContext } from '../../context/TodosContext';
 
 export default function TodosHeader() {

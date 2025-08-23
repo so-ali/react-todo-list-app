@@ -9,8 +9,8 @@ import {
   setState,
   updateTodo,
 } from '../store/slices/todo';
-import type { ITodosFilters } from '../types/ui/TodosHeader';
-import type { ITodoItem } from '../types/logic/TodoSlice';
+import type { ITodosFilters } from '@type/ui/TodosHeader';
+import type { ITodoItem } from '@type/logic/TodoSlice';
 import { arrayMove } from '@dnd-kit/sortable';
 
 export const useTodoController = ({

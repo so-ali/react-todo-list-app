@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { addTodo, deleteTodo, getTodos, updateTodo } from '../services/todoApi';
-import type { ITodoItem } from '../types/logic/TodoSlice';
+import type { ITodoItem } from '@type/logic/TodoSlice';
 
 export const useTodoQuery = ({
   limit = 30,

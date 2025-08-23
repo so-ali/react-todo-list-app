@@ -1,4 +1,4 @@
-import type { IErrorMessageProps } from '../../types/ui/ErrorMessage';
+import type { IErrorMessageProps } from '@type/ui/ErrorMessage';
 import Button from '../atoms/Button';
 import { RefreshCw } from 'lucide-react';
 

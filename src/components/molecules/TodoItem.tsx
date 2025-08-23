@@ -1,9 +1,9 @@
 import { Check, Menu, X } from 'lucide-react';
 import Button from '../atoms/Button';
 import { cx } from '../../utils/helpers';
-import type { ITodoItemProps } from '../../types/ui/TodoItem';
+import type { ITodoItemProps } from '@type/ui/TodoItem';
 import { useState } from 'react';
-import type { ITodoItem } from '../../types/logic/TodoSlice';
+import type { ITodoItem } from '@type/logic/TodoSlice';
 import Loading from './Loading';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';

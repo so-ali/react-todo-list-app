@@ -3,7 +3,7 @@ import Button from '../atoms/Button';
 import Input from '../atoms/Input';
 import { useRef, useState } from 'react';
 import { cx } from '../../utils/helpers';
-import type { ISearchFormProps } from '../../types/ui/SearchForm';
+import type { ISearchFormProps } from '@type/ui/SearchForm';
 
 export default function SearchForm({ value, onChange }: ISearchFormProps) {
   const [display, setDisplay] = useState(false);

@@ -1,4 +1,4 @@
-import type { ITodoItem } from '../types/logic/TodoSlice';
+import type { ITodoItem } from '@type/logic/TodoSlice';
 const API_BASE = 'https://dummyjson.com';
 
 export const getTodos = async (
