@@ -4,6 +4,3 @@ export type ITodosFilters = {
   search: string;
   status: IFilterValues;
 };
-export type ITodosHeaderProps = {
-  onFilter?: ({ search, status }: ITodosFilters) => void;
-};

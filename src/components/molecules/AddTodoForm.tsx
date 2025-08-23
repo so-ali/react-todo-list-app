@@ -1,14 +1,15 @@
 import { Plus } from 'lucide-react';
 import Button from '../atoms/Button';
 import Input from '../atoms/Input';
-import type { IAddTodoFormProps } from '../../types/ui/AddTodoForm';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { SchemaAddForm } from '../../schemas/addTodoForm';
 import type z from 'zod';
 import { toast } from 'react-toastify';
+import { useTodosContext } from '../../context/TodosContext';
 
-export default function AddTodoForm({ onAdd }: IAddTodoFormProps) {
+export default function AddTodoForm() {
+  const todosContext = useTodosContext();
   const {
     register,
     handleSubmit,
@@ -20,7 +21,7 @@ export default function AddTodoForm({ onAdd }: IAddTodoFormProps) {
 
   const onSubmit = async (data: z.infer<typeof SchemaAddForm>) => {
     if (isSubmitting) return;
-    await onAdd(data.todo);
+    await todosContext.add(data.todo);
     setValue('todo', '');
     toast.dismiss();
     toast.success('Added successfully!');
@@ -39,7 +40,7 @@ export default function AddTodoForm({ onAdd }: IAddTodoFormProps) {
         autoFocus
         autoComplete='off'
       />
-      <Button style='primary' error={!!errors.todo} loading={isSubmitting}>
+      <Button variant='primary' error={!!errors.todo} loading={isSubmitting}>
         <Plus />
       </Button>
     </form>

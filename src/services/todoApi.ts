@@ -1,4 +1,5 @@
 import type { ITodoItem } from '../types/logic/TodoSlice';
+const API_BASE = 'https://dummyjson.com';
 
 export const getTodos = async (
   limit: number,
@@ -8,27 +9,23 @@ export const getTodos = async (
     limit: limit.toString(),
     offset: offset.toString(),
   });
-  try {
-    const response = await await fetch(
-      `https://dummyjson.com/todos?${searchParams.toString()}`
-    ).then((r) => r.json());
 
-    if (
-      typeof response === 'object' &&
-      response &&
-      Array.isArray(response?.todos)
-    ) {
-      return response?.todos.map((item: ITodoItem) => item as ITodoItem);
-    }
-  } catch (e) {
-    console.error(e);
+  const response = await fetch(`${API_BASE}/todos?${searchParams.toString()}`);
+  const parsedResponse = await response.json();
+
+  if (
+    typeof parsedResponse === 'object' &&
+    parsedResponse &&
+    Array.isArray(parsedResponse?.todos)
+  ) {
+    return parsedResponse?.todos.map((item: ITodoItem) => item as ITodoItem);
   }
 
   return [];
 };
 
 export const addTodo = async (todo: string) => {
-  return await fetch('https://dummyjson.com/todos/add', {
+  return await fetch(`${API_BASE}/todos/add`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
@@ -40,13 +37,13 @@ export const addTodo = async (todo: string) => {
 };
 
 export const deleteTodo = async (todoID: number) => {
-  return await fetch(`https://dummyjson.com/todos/${todoID}`, {
+  return await fetch(`${API_BASE}/todos/${todoID}`, {
     method: 'DELETE',
   }).then((r) => r.json());
 };
 
 export const updateTodo = async (todo: ITodoItem) => {
-  return await fetch(`https://dummyjson.com/todos/${todo.id}`, {
+  return await fetch(`${API_BASE}/todos/${todo.id}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({

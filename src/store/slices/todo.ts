@@ -16,7 +16,7 @@ export const todosSlice = createSlice({
     }),
     addTodo: (state, { payload }: { payload: ITodoItem }) => ({
       ...state,
-      todos: [payload].concat(state.todos),
+      todos: [payload, ...state.todos],
     }),
     removeTodo: (state, { payload }: { payload: number }) => ({
       ...state,

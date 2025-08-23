@@ -20,7 +20,7 @@ export default function SearchForm({ value, onChange }: ISearchFormProps) {
         ])}
       >
         <Button
-          style='transparent'
+          variant='transparent'
           onClick={() => {
             setDisplay(false);
             onChange('');
@@ -42,7 +42,7 @@ export default function SearchForm({ value, onChange }: ISearchFormProps) {
           setDisplay(true);
           setTimeout(() => inputRef.current?.focus(), 300);
         }}
-        style='transparent'
+        variant='transparent'
       >
         <Search />
       </Button>

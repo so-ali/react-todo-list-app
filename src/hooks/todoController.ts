@@ -13,11 +13,17 @@ import type { ITodosFilters } from '../types/ui/TodosHeader';
 import type { ITodoItem } from '../types/logic/TodoSlice';
 import { arrayMove } from '@dnd-kit/sortable';
 
-export const useTodoController = () => {
+export const useTodoController = ({
+  limit,
+  offset,
+}: {
+  limit: number;
+  offset: number;
+}) => {
   const todosStore = useTodosStore();
   const { getList, addItem, removeItem, updateItem } = useTodoQuery({
-    limit: 30,
-    offset: 0,
+    limit,
+    offset,
   });
   const dispatch = useDispatch<AppDispatch>();
   const [filters, setFilters] = useState<ITodosFilters>();
@@ -25,7 +31,7 @@ export const useTodoController = () => {
   useEffect(() => {
     if (getList.isLoading) {
       dispatch(setState({ status: 'loading', todos: [] }));
-    } else if (getList.isError) {
+    } else if (getList.isError || getList.isLoadingError) {
       dispatch(setState({ status: 'failed', todos: [] }));
     } else if (getList.isSuccess && getList.data) {
       dispatch(setState({ status: 'ready', todos: getList.data }));
@@ -34,6 +40,7 @@ export const useTodoController = () => {
     dispatch,
     getList.isLoading,
     getList.isError,
+    getList.isLoadingError,
     getList.isSuccess,
     getList.data,
   ]);
@@ -52,17 +59,17 @@ export const useTodoController = () => {
         .includes(filters.search.toLowerCase());
       return matchesStatus && matchesSearch;
     });
-    //.sort((a) => ('all' === filters.status && a.completed ? 0 : -1));
   }, [todosStore.todos, filters]);
 
   const add = async (val: string) => {
     try {
       const item = await addItem.mutateAsync(val);
-      dispatch(addTodo(item as ITodoItem));
+      dispatch(addTodo(item));
     } catch (e) {
       console.error(e);
     }
   };
+
   const remove = async (id: number) => {
     try {
       await removeItem.mutateAsync(id);
@@ -71,6 +78,7 @@ export const useTodoController = () => {
       console.error(e);
     }
   };
+
   const toggle = async (item: ITodoItem) => {
     try {
       await updateItem.mutateAsync(item);
@@ -79,6 +87,7 @@ export const useTodoController = () => {
       console.error(e);
     }
   };
+
   const sort = ({
     oldIndex,
     newIndex,

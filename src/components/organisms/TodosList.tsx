@@ -1,4 +1,5 @@
-import type { ITodosListProps } from '../../types/ui/TodosList';
+import { useEffect, useState } from 'react';
+import { useTodosContext } from '../../context/TodosContext';
 import TodoItem from '../molecules/TodoItem';
 import {
   DndContext,
@@ -15,13 +16,9 @@ import {
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 
-export default function TodosList({
-  list,
-  onToggle,
-  onDelete,
-  onSort,
-  enabledSort,
-}: ITodosListProps) {
+export default function TodosList() {
+  const [enabledSort, setEnabledSort] = useState(false);
+  const todosContext = useTodosContext();
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
@@ -29,7 +26,14 @@ export default function TodosList({
     })
   );
 
-  function handleDragEnd(event: DragEndEvent) {
+  useEffect(() => {
+    setEnabledSort(
+      todosContext.filters?.status === 'all' &&
+        todosContext.filters?.search === ''
+    );
+  }, [todosContext.filters]);
+
+  const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
 
     if (!over) {
@@ -37,31 +41,33 @@ export default function TodosList({
     }
 
     if (active.id !== over.id) {
-      const oldIndex = list.indexOf(
-        list.find((item) => item.id === active.id)!
+      const oldIndex = todosContext.todos.indexOf(
+        todosContext.todos.find((item) => item.id === active.id)!
       );
-      const newIndex = list.indexOf(list.find((item) => item.id === over.id)!);
-      onSort({ oldIndex, newIndex });
+      const newIndex = todosContext.todos.indexOf(
+        todosContext.todos.find((item) => item.id === over.id)!
+      );
+      todosContext.sort({ oldIndex, newIndex });
     }
-  }
+  };
   return (
-    <div className='h-full overflow-auto pr-3'>
+    <div className='h-full overflow-auto pr-3 flex flex-col gap-2'>
       <DndContext
         sensors={sensors}
         collisionDetection={closestCenter}
         onDragEnd={handleDragEnd}
       >
         <SortableContext
-          items={list}
+          items={todosContext.todos}
           strategy={verticalListSortingStrategy}
           disabled={!enabledSort}
         >
-          {list.map((item, index) => (
+          {todosContext.todos.map((item) => (
             <TodoItem
+              key={item.id}
               todo={item}
-              onDelete={onDelete}
-              onToggle={onToggle}
-              key={index}
+              onDelete={todosContext.remove}
+              onToggle={todosContext.toggle}
               sortable={enabledSort}
             />
           ))}

@@ -9,51 +9,41 @@ export const useTodoQuery = ({
   limit: number;
   offset: number;
 }) => {
+  const queryKey = ['todos', limit, offset];
   const queryClient = useQueryClient();
   const getList = useQuery({
-    queryKey: ['todos', limit, offset],
+    queryKey,
     queryFn: () => getTodos(limit, offset),
   });
 
   const addItem = useMutation({
     mutationFn: (todo: string) => addTodo(todo),
-    onMutate: async (newTodo) => {
-      await queryClient.cancelQueries({ queryKey: ['todos'] });
-      const previousTodos = queryClient.getQueryData(['todos']);
-      queryClient.setQueryData(['todos'], (oldTodos: ITodoItem[]) => [
-        {
-          id: oldTodos.length + 1,
-          todo: newTodo,
-          completed: false,
-          userId: 0,
-        },
-        ...oldTodos,
-      ]);
+    onMutate: async () => {
+      await queryClient.cancelQueries({ queryKey });
+      const previousTodos = queryClient.getQueryData(queryKey);
 
       return { previousTodos };
     },
     onError: (_er, _n, context) => {
       if (context) {
-        queryClient.setQueryData(['todos'], context.previousTodos);
+        queryClient.setQueryData(queryKey, context.previousTodos);
       }
     },
-    onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ['todos'] });
+    onSuccess: (data) => {
+      queryClient.setQueryData(queryKey, (oldTodos: ITodoItem[]) => {
+        return [data, ...oldTodos];
+      });
     },
   });
 
   const removeItem = useMutation({
     mutationFn: (id: number) => deleteTodo(id),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['todos'] });
-    },
+    // We can use the optimistic updates like the add item but our API is a mock API.
   });
 
   const updateItem = useMutation({
     mutationFn: (updatedTodo: ITodoItem) => updateTodo(updatedTodo),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['todos'] });
-    },
+    // We can use the optimistic updates like the add item but our API is a mock API.
   });
 
   return { getList, addItem, removeItem, updateItem };

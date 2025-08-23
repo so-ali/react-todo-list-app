@@ -6,5 +6,5 @@ export type ITodoItem = {
   id: number;
   todo: string;
   completed: boolean;
-  userID: number;
+  userId: number;
 };

@@ -2,17 +2,18 @@ import SearchForm from '../molecules/SearchForm';
 import Filter from '../molecules/Filter';
 import { useEffect, useState } from 'react';
 import type { IFilterValues } from '../../types/ui/Filter';
-import type { ITodosHeaderProps } from '../../types/ui/TodosHeader';
+import { useTodosContext } from '../../context/TodosContext';
 
-export default function TodosHeader({ onFilter }: ITodosHeaderProps) {
+export default function TodosHeader() {
+  const todos = useTodosContext();
   const [status, setStatus] = useState<IFilterValues>('all');
   const [search, setSearch] = useState('');
 
   useEffect(() => {
-    if (onFilter && (status.length || search.length)) {
-      onFilter({ status, search });
+    if (status.length || search.length) {
+      todos.setFilters({ status, search });
     }
-  }, [status, search, onFilter]);
+  }, [status, search]);
   return (
     <div className='flex gap-3 items-center relative'>
       <SearchForm value={search} onChange={setSearch} />

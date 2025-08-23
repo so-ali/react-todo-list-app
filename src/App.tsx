@@ -4,39 +4,26 @@ import AddTodoForm from './components/molecules/AddTodoForm';
 import Loading from './components/molecules/Loading';
 import ErrorMessage from './components/molecules/ErrorMessage';
 import TodosHeader from './components/organisms/TodosHeader';
-import { useTodoController } from './hooks/todoController';
+import { useTodosContext } from './context/TodosContext';
 function AppContainer() {
-  const todoController = useTodoController();
+  const todos = useTodosContext();
 
   return (
     <ContainerTemplate
-      header={<TodosHeader onFilter={todoController.setFilters} />}
+      header={<TodosHeader />}
       list={
         <>
-          {todoController.status === 'loading' && (
-            <Loading placeholder='Loading...' />
-          )}
-          {todoController.status === 'failed' && (
+          {todos.status === 'loading' && <Loading placeholder='Loading...' />}
+          {todos.status === 'failed' && (
             <ErrorMessage
               message='Something went wrong...'
-              onRetry={() => todoController.refetch()}
+              onRetry={() => todos.refetch()}
             />
           )}
-          {todoController.status === 'ready' && todoController.todos && (
-            <TodosList
-              list={todoController.todos}
-              onToggle={(item) => todoController.toggle(item)}
-              onDelete={(id) => todoController.remove(id)}
-              onSort={(sort) => todoController.sort(sort)}
-              enabledSort={
-                todoController.filters?.status === 'all' &&
-                todoController.filters?.search === ''
-              }
-            />
-          )}
+          {todos.status === 'ready' && <TodosList />}
         </>
       }
-      form={<AddTodoForm onAdd={(val) => todoController.add(val)} />}
+      form={<AddTodoForm />}
     />
   );
 }

@@ -20,10 +20,6 @@ export default function TodoItem({
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({
       id: todo.id,
-      transition: {
-        duration: 0,
-        easing: 'linear',
-      },
     });
 
   const style = {
@@ -84,7 +80,7 @@ export default function TodoItem({
           </span>
         </div>
         <Button
-          style={'transparent'}
+          variant='transparent'
           title='Remove'
           onClick={() => handleDelete(todo.id)}
           loading={deleteLoading}
