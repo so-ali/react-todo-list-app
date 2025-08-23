@@ -1,13 +1,13 @@
-import { createSlice } from '@reduxjs/toolkit';
-import type { ITodoItem, ITodoSliceState } from '@type/logic/TodoSlice';
+import { createSlice } from "@reduxjs/toolkit";
+import type { ITodoItem, ITodoSliceState } from "@type/logic/TodoSlice";
 
 const initialState = {
-  status: 'idle',
+  status: "idle",
   todos: [],
 } satisfies ITodoSliceState as ITodoSliceState;
 
 export const todosSlice = createSlice({
-  name: 'todos',
+  name: "todos",
   initialState,
   reducers: {
     setState: (state, { payload }: { payload: ITodoSliceState }) => ({
@@ -26,7 +26,7 @@ export const todosSlice = createSlice({
       return {
         ...state,
         todos: state.todos.map((item) =>
-          item.id === payload.id ? payload : item
+          item.id === payload.id ? payload : item,
         ),
       };
     },

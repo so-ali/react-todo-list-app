@@ -1,6 +1,6 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { addTodo, deleteTodo, getTodos, updateTodo } from '../services/todoApi';
-import type { ITodoItem } from '@type/logic/TodoSlice';
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { addTodo, deleteTodo, getTodos, updateTodo } from "../services/todoApi";
+import type { ITodoItem } from "@type/logic/TodoSlice";
 
 export const useTodoQuery = ({
   limit = 30,
@@ -9,7 +9,7 @@ export const useTodoQuery = ({
   limit: number;
   offset: number;
 }) => {
-  const queryKey = ['todos', limit, offset];
+  const queryKey = ["todos", limit, offset];
   const queryClient = useQueryClient();
   const getList = useQuery({
     queryKey,

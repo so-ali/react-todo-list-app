@@ -1,4 +1,4 @@
-import type { ITodoItem } from '@type/logic/TodoSlice';
+import type { ITodoItem } from "@type/logic/TodoSlice";
 
 export interface ITodoItemProps {
   todo: ITodoItem;

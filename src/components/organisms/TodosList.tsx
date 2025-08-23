@@ -1,6 +1,6 @@
-import { memo, useEffect, useMemo, useState } from 'react';
-import { useTodosContext } from '../../hooks/todosContext';
-import TodoItem from '../molecules/TodoItem';
+import { memo, useEffect, useMemo, useState } from "react";
+import { useTodosContext } from "../../hooks/todosContext";
+import TodoItem from "../molecules/TodoItem";
 import {
   DndContext,
   closestCenter,
@@ -9,13 +9,13 @@ import {
   useSensor,
   useSensors,
   type DragEndEvent,
-} from '@dnd-kit/core';
+} from "@dnd-kit/core";
 import {
   SortableContext,
   sortableKeyboardCoordinates,
   verticalListSortingStrategy,
-} from '@dnd-kit/sortable';
-import { WarningMessage } from '@components/molecules';
+} from "@dnd-kit/sortable";
+import { WarningMessage } from "@components/molecules";
 
 const TodosList: React.FC = memo(() => {
   const [enabledSort, setEnabledSort] = useState(false);
@@ -26,14 +26,14 @@ const TodosList: React.FC = memo(() => {
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,
-    })
+    }),
   );
 
   useEffect(() => {
     if (todosContext.filters) {
       setEnabledSort(
-        todosContext.filters.status === 'all' &&
-          todosContext.filters.search === ''
+        todosContext.filters.status === "all" &&
+          todosContext.filters.search === "",
       );
     }
   }, [todosContext.filters]);
@@ -47,10 +47,10 @@ const TodosList: React.FC = memo(() => {
 
     if (active.id !== over.id) {
       const findActiveObject = todosContext.todos.find(
-        (item) => item.id === active.id
+        (item) => item.id === active.id,
       );
       const findNewObject = todosContext.todos.find(
-        (item) => item.id === over.id
+        (item) => item.id === over.id,
       );
 
       if (!findActiveObject || !findNewObject) {
@@ -63,7 +63,7 @@ const TodosList: React.FC = memo(() => {
     }
   };
   return (
-    <div className='h-full overflow-auto pr-3 flex flex-col gap-2'>
+    <div className="h-full overflow-auto pr-3 flex flex-col gap-2">
       <DndContext
         sensors={sensors}
         collisionDetection={closestCenter}
@@ -84,7 +84,7 @@ const TodosList: React.FC = memo(() => {
             />
           ))}
           {!memoizedTodos.length && (
-            <WarningMessage message='No todo found...' />
+            <WarningMessage message="No todo found..." />
           )}
         </SortableContext>
       </DndContext>

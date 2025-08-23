@@ -1,11 +1,11 @@
-import type React from 'react';
+import type React from "react";
 
-export type IButtonVariants = 'primary' | 'normal' | 'outlined' | 'transparent';
+export type IButtonVariants = "primary" | "normal" | "outlined" | "transparent";
 
 export interface IButtonProps {
   children?: React.ReactNode;
   variant?: IButtonVariants;
-  size?: 'small' | 'normal';
+  size?: "small" | "normal";
   loading?: boolean;
   error?: boolean;
 }

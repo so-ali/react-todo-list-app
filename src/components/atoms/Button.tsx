@@ -1,11 +1,11 @@
-import type { ButtonHTMLAttributes } from 'react';
-import type { IButtonProps } from './Button.types';
-import { cx } from '../../utils/helpers';
-import Loading from '../molecules/Loading';
+import type { ButtonHTMLAttributes } from "react";
+import type { IButtonProps } from "./Button.types";
+import { cx } from "../../utils/helpers";
+import Loading from "../molecules/Loading";
 
 export default function Button({
   children,
-  variant = 'normal',
+  variant = "normal",
   size,
   loading,
   error,
@@ -14,8 +14,8 @@ export default function Button({
   const className = cx([
     props.className,
     error &&
-      '!bg-red-600 !text-white hover:!bg-red-700 animate__animated animate__shakeX',
-    size === 'small' && 'text-xs py-1 px-3',
+      "!bg-red-600 !text-white hover:!bg-red-700 animate__animated animate__shakeX",
+    size === "small" && "text-xs py-1 px-3",
   ]);
 
   return (

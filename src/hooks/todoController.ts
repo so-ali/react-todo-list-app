@@ -1,17 +1,17 @@
-import { useDispatch } from 'react-redux';
-import { useTodosStore } from './store';
-import { useTodoQuery } from './todoQuery';
-import type { AppDispatch } from '../store/store';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useDispatch } from "react-redux";
+import { useTodosStore } from "./store";
+import { useTodoQuery } from "./todoQuery";
+import type { AppDispatch } from "../store/store";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   addTodo,
   removeTodo,
   setState,
   updateTodo,
-} from '../store/slices/todo';
-import type { ITodoItem } from '@type/logic/TodoSlice';
-import { arrayMove } from '@dnd-kit/sortable';
-import type { ITodosFilters } from '@components/molecules/Filter.types';
+} from "../store/slices/todo";
+import type { ITodoItem } from "@type/logic/TodoSlice";
+import { arrayMove } from "@dnd-kit/sortable";
+import type { ITodosFilters } from "@components/molecules/Filter.types";
 
 export const useTodoController = ({
   limit,
@@ -34,11 +34,11 @@ export const useTodoController = ({
 
   useEffect(() => {
     if (getList.isLoading) {
-      dispatch(setState({ status: 'loading', todos: [] }));
+      dispatch(setState({ status: "loading", todos: [] }));
     } else if (getList.isError) {
-      dispatch(setState({ status: 'failed', todos: [] }));
+      dispatch(setState({ status: "failed", todos: [] }));
     } else if (getList.isSuccess) {
-      dispatch(setState({ status: 'ready', todos: getList.data }));
+      dispatch(setState({ status: "ready", todos: getList.data }));
     }
   }, [
     dispatch,
@@ -54,8 +54,8 @@ export const useTodoController = ({
 
     return todosStore.todos.filter((todo) => {
       const matchesStatus =
-        filters.status === 'all' ||
-        todo.completed === (filters.status === 'completed');
+        filters.status === "all" ||
+        todo.completed === (filters.status === "completed");
 
       const matchesSearch = todo.todo
         .toLowerCase()
@@ -100,9 +100,9 @@ export const useTodoController = ({
   }) => {
     dispatch(
       setState({
-        status: 'ready',
+        status: "ready",
         todos: arrayMove(todosStore.todos, oldIndex, newIndex),
-      })
+      }),
     );
   };
 

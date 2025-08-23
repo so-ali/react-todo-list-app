@@ -1,9 +1,9 @@
-import type { ITodoItem } from '@type/logic/TodoSlice';
-const API_BASE = 'https://dummyjson.com';
+import type { ITodoItem } from "@type/logic/TodoSlice";
+const API_BASE = "https://dummyjson.com";
 
 export const getTodos = async (
   limit: number,
-  offset: number
+  offset: number,
 ): Promise<ITodoItem[]> => {
   const searchParams = new URLSearchParams({
     limit: limit.toString(),
@@ -20,8 +20,8 @@ export const getTodos = async (
 
 export const addTodo = async (todo: string) => {
   return (await fetch(`${API_BASE}/todos/add`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       todo: todo,
       completed: false,
@@ -35,14 +35,14 @@ export const addTodo = async (todo: string) => {
 
 export const deleteTodo = async (todoID: number) => {
   return (await fetch(`${API_BASE}/todos/${todoID.toString()}`, {
-    method: 'DELETE',
+    method: "DELETE",
   }).then((r) => r.json())) as ITodoItem;
 };
 
 export const updateTodo = async (todo: ITodoItem) => {
   return await fetch(`${API_BASE}/todos/${todo.id.toString()}`, {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       completed: todo.completed,
     }),

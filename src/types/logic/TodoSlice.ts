@@ -1,5 +1,5 @@
 export interface ITodoSliceState {
-  status: 'idle' | 'loading' | 'ready' | 'failed';
+  status: "idle" | "loading" | "ready" | "failed";
   todos: ITodoItem[];
 }
 export interface ITodoItem {
