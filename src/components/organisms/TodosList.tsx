@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { memo, useEffect, useMemo, useState } from 'react';
 import { useTodosContext } from '../../hooks/todosContext';
 import TodoItem from '../molecules/TodoItem';
 import {
@@ -17,9 +17,11 @@ import {
 } from '@dnd-kit/sortable';
 import { WarningMessage } from '@components/molecules';
 
-export default function TodosList() {
+const TodosList: React.FC = memo(() => {
   const [enabledSort, setEnabledSort] = useState(false);
   const todosContext = useTodosContext();
+  const memoizedTodos = useMemo(() => todosContext.todos, [todosContext.todos]);
+
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
@@ -68,11 +70,11 @@ export default function TodosList() {
         onDragEnd={handleDragEnd}
       >
         <SortableContext
-          items={todosContext.todos}
+          items={memoizedTodos}
           strategy={verticalListSortingStrategy}
           disabled={!enabledSort}
         >
-          {todosContext.todos.map((item) => (
+          {memoizedTodos.map((item) => (
             <TodoItem
               key={item.id}
               todo={item}
@@ -81,11 +83,13 @@ export default function TodosList() {
               sortable={enabledSort}
             />
           ))}
-          {!todosContext.todos.length && (
+          {!memoizedTodos.length && (
             <WarningMessage message='No todo found...' />
           )}
         </SortableContext>
       </DndContext>
     </div>
   );
-}
+});
+
+export { TodosList as default };

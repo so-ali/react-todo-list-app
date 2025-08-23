@@ -2,14 +2,14 @@ import { Check, Menu, X } from 'lucide-react';
 import Button from '../atoms/Button';
 import { cx } from '../../utils/helpers';
 import type { ITodoItemProps } from './TodoItem.types';
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import type { ITodoItem } from '@type/logic/TodoSlice';
 import Loading from './Loading';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import Swal from 'sweetalert2';
 
-export default function TodoItem({
+export default memo(function TodoItem({
   todo,
   onDelete,
   onToggle,
@@ -94,4 +94,4 @@ export default function TodoItem({
       </div>
     </div>
   );
-}
+});
