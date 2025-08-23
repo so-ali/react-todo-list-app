@@ -1,5 +1,5 @@
 import type { ButtonHTMLAttributes } from 'react';
-import type { IButtonProps } from '@type/ui/Button';
+import type { IButtonProps } from './Button.types';
 import { cx } from '../../utils/helpers';
 import Loading from '../molecules/Loading';
 

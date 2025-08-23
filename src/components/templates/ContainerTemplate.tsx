@@ -1,4 +1,4 @@
-import type { IContainerTemplateProps } from '@type/ui/ContainerTemplate';
+import type { IContainerTemplateProps } from './ContainerTemplate.types';
 
 export default function ContainerTemplate({
   header,

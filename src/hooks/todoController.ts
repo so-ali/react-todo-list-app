@@ -2,16 +2,16 @@ import { useDispatch } from 'react-redux';
 import { useTodosStore } from './store';
 import { useTodoQuery } from './todoQuery';
 import type { AppDispatch } from '../store/store';
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   addTodo,
   removeTodo,
   setState,
   updateTodo,
 } from '../store/slices/todo';
-import type { ITodosFilters } from '@type/ui/TodosHeader';
 import type { ITodoItem } from '@type/logic/TodoSlice';
 import { arrayMove } from '@dnd-kit/sortable';
+import type { ITodosFilters } from '@components/molecules/Filter.types';
 
 export const useTodoController = ({
   limit,
@@ -26,14 +26,18 @@ export const useTodoController = ({
     offset,
   });
   const dispatch = useDispatch<AppDispatch>();
-  const [filters, setFilters] = useState<ITodosFilters>();
+  const [filters, setFiltersState] = useState<ITodosFilters>();
+
+  const setFilters = useCallback((data: ITodosFilters) => {
+    setFiltersState(data);
+  }, []);
 
   useEffect(() => {
     if (getList.isLoading) {
       dispatch(setState({ status: 'loading', todos: [] }));
-    } else if (getList.isError || getList.isLoadingError) {
+    } else if (getList.isError) {
       dispatch(setState({ status: 'failed', todos: [] }));
-    } else if (getList.isSuccess && getList.data) {
+    } else if (getList.isSuccess) {
       dispatch(setState({ status: 'ready', todos: getList.data }));
     }
   }, [
@@ -46,7 +50,6 @@ export const useTodoController = ({
   ]);
 
   const todos = useMemo(() => {
-    if (!todosStore.todos) return [];
     if (!filters) return todosStore.todos;
 
     return todosStore.todos.filter((todo) => {

@@ -1,4 +1,4 @@
-export type IInputProps = {
+export interface IInputProps {
   style?: 'normal';
   error?: string;
-};
+}

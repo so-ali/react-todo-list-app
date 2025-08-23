@@ -1,5 +1,5 @@
 import { forwardRef, type InputHTMLAttributes } from 'react';
-import type { IInputProps } from '@type/ui/Input';
+import type { IInputProps } from './Input.types';
 import { cx } from '../../utils/helpers';
 
 function InputComponent(

@@ -11,21 +11,15 @@ export const getTodos = async (
   });
 
   const response = await fetch(`${API_BASE}/todos?${searchParams.toString()}`);
-  const parsedResponse = await response.json();
+  const parsedResponse: { todos: ITodoItem[] } = (await response.json()) as {
+    todos: ITodoItem[];
+  };
 
-  if (
-    typeof parsedResponse === 'object' &&
-    parsedResponse &&
-    Array.isArray(parsedResponse?.todos)
-  ) {
-    return parsedResponse?.todos.map((item: ITodoItem) => item as ITodoItem);
-  }
-
-  return [];
+  return parsedResponse.todos;
 };
 
 export const addTodo = async (todo: string) => {
-  return await fetch(`${API_BASE}/todos/add`, {
+  return (await fetch(`${API_BASE}/todos/add`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
@@ -33,17 +27,20 @@ export const addTodo = async (todo: string) => {
       completed: false,
       userId: Math.round(Math.random() * 100), // Generate random user id.
     }),
-  }).then((r) => r.json());
+  }).then((r) => r.json())) as ITodoItem & {
+    isDeleted: boolean;
+    deletedOn: string;
+  };
 };
 
 export const deleteTodo = async (todoID: number) => {
-  return await fetch(`${API_BASE}/todos/${todoID}`, {
+  return (await fetch(`${API_BASE}/todos/${todoID.toString()}`, {
     method: 'DELETE',
-  }).then((r) => r.json());
+  }).then((r) => r.json())) as ITodoItem;
 };
 
 export const updateTodo = async (todo: ITodoItem) => {
-  return await fetch(`${API_BASE}/todos/${todo.id}`, {
+  return await fetch(`${API_BASE}/todos/${todo.id.toString()}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({

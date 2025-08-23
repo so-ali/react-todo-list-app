@@ -6,7 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { SchemaAddForm } from '../../schemas/addTodoForm';
 import type z from 'zod';
 import { toast } from 'react-toastify';
-import { useTodosContext } from '../../context/TodosContext';
+import { useTodosContext } from '../../hooks/todosContext';
 
 export default function AddTodoForm() {
   const todosContext = useTodosContext();
@@ -27,11 +27,13 @@ export default function AddTodoForm() {
     toast.success('Added successfully!');
   };
 
+  const handleFormSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
+    e.preventDefault();
+    void handleSubmit(onSubmit, (err) => toast.error(err.todo?.message))(e);
+  };
+
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit, (e) => toast.error(e.todo?.message))}
-      className='flex gap-3 w-full'
-    >
+    <form onSubmit={handleFormSubmit} className='flex gap-3 w-full'>
       <Input
         className='flex-1 w-[inherit]'
         placeholder='Memorize a poem...'

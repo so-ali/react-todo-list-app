@@ -1,10 +1,10 @@
-export type ITodoSliceState = {
+export interface ITodoSliceState {
   status: 'idle' | 'loading' | 'ready' | 'failed';
   todos: ITodoItem[];
-};
-export type ITodoItem = {
+}
+export interface ITodoItem {
   id: number;
   todo: string;
   completed: boolean;
   userId: number;
-};
+}

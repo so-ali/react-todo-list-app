@@ -4,7 +4,7 @@ import { AddTodoForm } from '@components/molecules';
 import { Loading } from '@components/molecules';
 import { ErrorMessage } from '@components/molecules';
 import { TodosHeader } from '@components/organisms';
-import { useTodosContext } from './context/TodosContext';
+import { useTodosContext } from './hooks/todosContext';
 
 function AppContainer() {
   const todos = useTodosContext();
@@ -18,7 +18,7 @@ function AppContainer() {
           {todos.status === 'failed' && (
             <ErrorMessage
               message='Something went wrong...'
-              onRetry={() => todos.refetch()}
+              onRetry={() => void todos.refetch()}
             />
           )}
           {todos.status === 'ready' && <TodosList />}

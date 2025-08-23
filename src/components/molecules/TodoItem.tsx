@@ -1,7 +1,7 @@
 import { Check, Menu, X } from 'lucide-react';
 import Button from '../atoms/Button';
 import { cx } from '../../utils/helpers';
-import type { ITodoItemProps } from '@type/ui/TodoItem';
+import type { ITodoItemProps } from './TodoItem.types';
 import { useState } from 'react';
 import type { ITodoItem } from '@type/logic/TodoSlice';
 import Loading from './Loading';
@@ -56,7 +56,9 @@ export default function TodoItem({
       >
         <div
           className='flex gap-2 items-center cursor-pointer '
-          onClick={() => handleToggle({ ...todo, completed: !todo.completed })}
+          onClick={() => {
+            void handleToggle({ ...todo, completed: !todo.completed });
+          }}
         >
           {sortable && (
             <span
@@ -82,7 +84,9 @@ export default function TodoItem({
         <Button
           variant='transparent'
           title='Remove'
-          onClick={() => handleDelete(todo.id)}
+          onClick={() => {
+            void handleDelete(todo.id);
+          }}
           loading={deleteLoading}
         >
           <X size={16} />

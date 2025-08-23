@@ -3,9 +3,13 @@ import Button from '../atoms/Button';
 import Input from '../atoms/Input';
 import { useRef, useState } from 'react';
 import { cx } from '../../utils/helpers';
-import type { ISearchFormProps } from '@type/ui/SearchForm';
+import type { ISearchFormProps } from './SearchForm.types';
 
-export default function SearchForm({ value, onChange }: ISearchFormProps) {
+export default function SearchForm({
+  value,
+  onChange,
+  disabled,
+}: ISearchFormProps) {
   const [display, setDisplay] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -22,6 +26,9 @@ export default function SearchForm({ value, onChange }: ISearchFormProps) {
         <Button
           variant='transparent'
           onClick={() => {
+            if (disabled) {
+              return;
+            }
             setDisplay(false);
             onChange('');
           }}
@@ -32,13 +39,21 @@ export default function SearchForm({ value, onChange }: ISearchFormProps) {
           className='flex-1'
           placeholder='Type to search...'
           value={value}
-          onChange={(e) => onChange(e.target.value)}
+          onChange={(e) => {
+            if (disabled) {
+              return;
+            }
+            onChange(e.target.value);
+          }}
           autoFocus={display}
           ref={inputRef}
         />
       </div>
       <Button
         onClick={() => {
+          if (disabled) {
+            return;
+          }
           setDisplay(true);
           setTimeout(() => inputRef.current?.focus(), 300);
         }}

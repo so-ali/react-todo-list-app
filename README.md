@@ -1,69 +1,69 @@
-# React + TypeScript + Vite
+# Todo List Practice App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a Todo List application built with **React**, **TypeScript**, and **Vite**. It demonstrates modern React architecture using context, hooks, and modular components, with a focus on clean code and scalability.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Add, edit, delete, and filter todos
+- Search todos
+- Error and loading states
+- Context API for global state management
+- Modular component structure (atoms, molecules, organisms, templates)
+- TypeScript for type safety
+- ESLint for code quality
 
-## Expanding the ESLint configuration
+## Project Structure
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+src/
+  assets/styles/         # CSS styles
+  components/
+   atoms/               # Basic UI elements (Button, Input)
+   molecules/           # Composed UI elements (AddTodoForm, TodoItem, etc.)
+   organisms/           # Complex UI sections (TodosHeader, TodosList)
+   templates/           # Layout templates
+  context/               # App and Todos context providers
+  hooks/                 # Custom hooks for store, todo logic, queries
+  schemas/               # Validation schemas
+  services/              # API service for todos
+  store/                 # Redux store and slices
+  types/                 # Type definitions
+  utils/                 # Helper functions
+public/                   # Static assets
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Getting Started
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+1. **Install dependencies**
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+yarn install
+# or
+npm install
 ```
+
+2. **Run the development server**
+
+```bash
+yarn dev
+# or
+npm run dev
+```
+
+3. **Open in browser**
+   Visit [http://localhost:5173](http://localhost:5173) to view the app.
+
+## Scripts
+
+- `dev` – Start development server
+- `build` – Build for production
+- `preview` – Preview production build
+- `lint` – Run ESLint
+
+## ESLint & TypeScript
+
+The project uses ESLint and TypeScript for code quality and type safety. You can expand ESLint rules in `eslint.config.js` as needed.
+
+## License
+
+MIT

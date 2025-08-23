@@ -4,7 +4,11 @@ import AppContainer from './App.tsx';
 import AppContextProvider from './context/AppContext.tsx';
 import './assets/styles/root.css';
 
-createRoot(document.getElementById('root')!).render(
+const rootDOM = document.getElementById('root');
+if (!rootDOM) {
+  throw new Error('Root element not found!');
+}
+createRoot(rootDOM).render(
   <StrictMode>
     <AppContextProvider>
       <AppContainer />

@@ -1,5 +1,5 @@
 import Button from '../atoms/Button';
-import { type IFilterProps, FilterEnum } from '@type/ui/Filter';
+import { type IFilterProps, FilterEnum } from './Filter.types';
 import { capitalize } from '../../utils/helpers';
 
 export default function Filter({ value, onChange, disabled }: IFilterProps) {
@@ -10,7 +10,10 @@ export default function Filter({ value, onChange, disabled }: IFilterProps) {
           variant={item === value ? 'primary' : 'normal'}
           size='small'
           key={item}
-          onClick={() => !disabled && onChange(item)}
+          onClick={() => {
+            if (disabled) return;
+            onChange(item);
+          }}
         >
           {capitalize(item)}
         </Button>

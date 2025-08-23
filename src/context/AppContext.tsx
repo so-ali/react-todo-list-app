@@ -3,7 +3,7 @@ import { Provider as ReduxProvider } from 'react-redux';
 import { appStore } from '../store/store';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ToastContainer } from 'react-toastify';
-import { TodosContextProvider } from './TodosContext';
+import TodosContextProvider from './providers/TodosContextProvider';
 
 const queryClient = new QueryClient();
 export default function AppContextProvider({

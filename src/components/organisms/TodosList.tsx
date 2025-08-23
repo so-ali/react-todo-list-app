@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useTodosContext } from '../../context/TodosContext';
+import { useTodosContext } from '../../hooks/todosContext';
 import TodoItem from '../molecules/TodoItem';
 import {
   DndContext,
@@ -15,6 +15,7 @@ import {
   sortableKeyboardCoordinates,
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
+import { WarningMessage } from '@components/molecules';
 
 export default function TodosList() {
   const [enabledSort, setEnabledSort] = useState(false);
@@ -27,10 +28,12 @@ export default function TodosList() {
   );
 
   useEffect(() => {
-    setEnabledSort(
-      todosContext.filters?.status === 'all' &&
-        todosContext.filters?.search === ''
-    );
+    if (todosContext.filters) {
+      setEnabledSort(
+        todosContext.filters.status === 'all' &&
+          todosContext.filters.search === ''
+      );
+    }
   }, [todosContext.filters]);
 
   const handleDragEnd = (event: DragEndEvent) => {
@@ -41,12 +44,19 @@ export default function TodosList() {
     }
 
     if (active.id !== over.id) {
-      const oldIndex = todosContext.todos.indexOf(
-        todosContext.todos.find((item) => item.id === active.id)!
+      const findActiveObject = todosContext.todos.find(
+        (item) => item.id === active.id
       );
-      const newIndex = todosContext.todos.indexOf(
-        todosContext.todos.find((item) => item.id === over.id)!
+      const findNewObject = todosContext.todos.find(
+        (item) => item.id === over.id
       );
+
+      if (!findActiveObject || !findNewObject) {
+        return;
+      }
+
+      const oldIndex = todosContext.todos.indexOf(findActiveObject);
+      const newIndex = todosContext.todos.indexOf(findNewObject);
       todosContext.sort({ oldIndex, newIndex });
     }
   };
@@ -71,6 +81,9 @@ export default function TodosList() {
               sortable={enabledSort}
             />
           ))}
+          {!todosContext.todos.length && (
+            <WarningMessage message='No todo found...' />
+          )}
         </SortableContext>
       </DndContext>
     </div>
