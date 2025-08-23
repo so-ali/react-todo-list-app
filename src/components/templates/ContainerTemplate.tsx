@@ -6,7 +6,7 @@ export default function ContainerTemplate({
   form,
 }: IContainerTemplateProps) {
   return (
-    <div className='w-[400px] max-w-full m-auto h-screen md:py-6 py-4 px-4'>
+    <div className='w-[450px] max-w-full m-auto h-screen md:py-6 py-4 px-4'>
       <div className='border border-gray-200 p-6 rounded-2xl h-full'>
         {header && <div className='h-[50px]'>{header}</div>}
         {list && <div className='h-[calc(100%-133px)]'>{list}</div>}
